@@ -1,0 +1,40 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.py[cod]
+.env
+venv/
+.venv/
+
+# Snowflake
+*.snowsql
+snowsql_config.ini
+
+# Logs
+*.log
+logs/
+
+# Data files (don't commit source data)
+*.xml
+*.json
+*.csv
+*.txt
+!*.sql
+!*.md
+!*.yml
+!*.yaml
+
+# Secrets
+.env
+.env.local
+secrets/
+credentials/
