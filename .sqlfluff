@@ -5,11 +5,20 @@ sql_file_exts = .sql
 max_line_length = 120
 indent_unit = space
 tab_space_size = 4
+large_file_skip_byte_limit = 0
 
 [sqlfluff:indentation]
 indented_joins = false
 indented_using_on = true
+indented_on_contents = true
+indented_ctes = false
+indented_then = true
+indented_then_contents = true
 template_blocks_indent = false
+
+[sqlfluff:layout:type:comma]
+spacing_before = touch
+line_position = trailing
 
 [sqlfluff:rules:capitalisation.keywords]
 capitalisation_policy = upper
@@ -20,9 +29,30 @@ capitalisation_policy = lower
 [sqlfluff:rules:capitalisation.functions]
 capitalisation_policy = upper
 
+[sqlfluff:rules:capitalisation.literals]
+capitalisation_policy = upper
+
+[sqlfluff:rules:capitalisation.types]
+capitalisation_policy = upper
+
 [sqlfluff:rules:layout.long_lines]
 ignore_comment_lines = true
 ignore_comment_clauses = true
 
 [sqlfluff:rules:ambiguous.column_references]
 group_by_and_order_by_style = implicit
+
+[sqlfluff:rules:convention.terminator]
+multiline_newline = true
+require_final_semicolon = true
+
+[sqlfluff:rules:convention.blocked_words]
+blocked_words = None
+
+# Exclude certain rules that conflict with Snowflake patterns
+[sqlfluff:rules]
+exclude_rules = LT05, ST06, AM04, RF04
+# LT05: Line too long (handled by max_line_length)
+# ST06: Select targets should be on new lines (optional)
+# AM04: Query produces an unknown number of result columns
+# RF04: Keywords should not be used as identifiers

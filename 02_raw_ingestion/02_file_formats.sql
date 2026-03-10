@@ -2,19 +2,12 @@
 ================================================================================
 FILE FORMATS - COMPLETE CONFIGURATION
 ================================================================================
-Purpose: Define file formats for all source file types
-Author:  Data Platform Team
-Version: 2.0
-================================================================================
 */
 
 USE DATABASE financial_data_platform;
 USE SCHEMA raw;
 
--- ============================================================================
 -- XML FILE FORMAT
--- For ClientA transaction files (.xml)
--- ============================================================================
 CREATE OR REPLACE FILE FORMAT raw.ff_xml
     TYPE = 'XML'
     COMPRESSION = 'AUTO'
@@ -25,10 +18,7 @@ CREATE OR REPLACE FILE FORMAT raw.ff_xml
     IGNORE_UTF8_ERRORS = TRUE
     COMMENT = 'XML format for ClientA transaction files';
 
--- ============================================================================
 -- JSON FILE FORMAT - Standard
--- For ClientC transaction files (.json)
--- ============================================================================
 CREATE OR REPLACE FILE FORMAT raw.ff_json
     TYPE = 'JSON'
     COMPRESSION = 'AUTO'
@@ -45,10 +35,7 @@ CREATE OR REPLACE FILE FORMAT raw.ff_json
     IGNORE_UTF8_ERRORS = TRUE
     COMMENT = 'JSON format for ClientC transaction files';
 
--- ============================================================================
 -- JSON FILE FORMAT - With Outer Array Stripped
--- Alternative for JSON arrays
--- ============================================================================
 CREATE OR REPLACE FILE FORMAT raw.ff_json_array
     TYPE = 'JSON'
     COMPRESSION = 'AUTO'
@@ -57,10 +44,7 @@ CREATE OR REPLACE FILE FORMAT raw.ff_json_array
     IGNORE_UTF8_ERRORS = TRUE
     COMMENT = 'JSON format with outer array stripped';
 
--- ============================================================================
 -- CSV FILE FORMAT - Standard (with header)
--- For reference data files with headers
--- ============================================================================
 CREATE OR REPLACE FILE FORMAT raw.ff_csv_standard
     TYPE = 'CSV'
     COMPRESSION = 'AUTO'
@@ -78,10 +62,7 @@ CREATE OR REPLACE FILE FORMAT raw.ff_csv_standard
     EMPTY_FIELD_AS_NULL = TRUE
     COMMENT = 'Standard CSV with header row';
 
--- ============================================================================
 -- CSV FILE FORMAT - No Header
--- For CSV files without headers
--- ============================================================================
 CREATE OR REPLACE FILE FORMAT raw.ff_csv_no_header
     TYPE = 'CSV'
     COMPRESSION = 'AUTO'
@@ -94,10 +75,7 @@ CREATE OR REPLACE FILE FORMAT raw.ff_csv_no_header
     NULL_IF = ('', 'NULL', 'null')
     COMMENT = 'CSV without header row';
 
--- ============================================================================
 -- CSV FILE FORMAT - Pipe Delimited
--- Alternative delimiter support
--- ============================================================================
 CREATE OR REPLACE FILE FORMAT raw.ff_csv_pipe
     TYPE = 'CSV'
     COMPRESSION = 'AUTO'
@@ -109,10 +87,7 @@ CREATE OR REPLACE FILE FORMAT raw.ff_csv_pipe
     NULL_IF = ('', 'NULL', 'null')
     COMMENT = 'Pipe-delimited CSV with header';
 
--- ============================================================================
 -- TXT FILE FORMAT - Raw Text
--- For TXT files containing XML (single blob)
--- ============================================================================
 CREATE OR REPLACE FILE FORMAT raw.ff_txt_raw
     TYPE = 'CSV'
     COMPRESSION = 'AUTO'
@@ -121,10 +96,7 @@ CREATE OR REPLACE FILE FORMAT raw.ff_txt_raw
     TRIM_SPACE = FALSE
     COMMENT = 'Raw text format - loads entire file as single field';
 
--- ============================================================================
 -- TXT FILE FORMAT - Line by Line
--- For TXT files that need line-by-line processing
--- ============================================================================
 CREATE OR REPLACE FILE FORMAT raw.ff_txt_lines
     TYPE = 'CSV'
     COMPRESSION = 'AUTO'
@@ -133,11 +105,11 @@ CREATE OR REPLACE FILE FORMAT raw.ff_txt_lines
     TRIM_SPACE = FALSE
     COMMENT = 'Text format - one record per line';
 
--- ============================================================================
--- VERIFICATION
--- ============================================================================
+-- Verification
 SHOW FILE FORMATS IN SCHEMA raw;
 
-SELECT 'File formats created successfully' AS status, COUNT(*) AS format_count 
-FROM INFORMATION_SCHEMA.FILE_FORMATS 
-WHERE FILE_FORMAT_SCHEMA = 'RAW';
+SELECT
+    'File formats created successfully' AS status,
+    COUNT(*) AS format_count
+FROM information_schema.file_formats
+WHERE file_format_schema = 'RAW';
